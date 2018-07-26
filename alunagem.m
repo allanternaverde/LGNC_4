@@ -37,14 +37,14 @@ hold on;
 
 % plot das curvas de pouso suave
 plot(v0,y0,'Linewidth', 2)
-leg = legend({'E à 0°','E à \pm35°'});
-leg = leg.String;
+% leg = legend({'E à 0°','E à \pm35°'});
+%leg = leg.String;
 
 %% condicoes iniciais do problema
 %plot das condicoes inicias
 scatter(v_0,y_0,'filled','Linewidth', 2, 'MarkerEdgeColor','k');
-leg = [leg,'cond. iniciais (v_0=-14m/s; y_0=150m)'];
-legend(leg);
+% leg = [leg,'cond. iniciais (v_0=-14m/s; y_0=150m)'];
+% legend(leg);
 
 %% condicao de chavemento queda-livre -> 0°
 % aceleracao antes do chaveamento
@@ -57,8 +57,8 @@ vals = [v_0, y_0, v_f, y_f, a1, a2];
 [y_1, v_1, ltx] = ptoChaveamento(vals);
 
 % plota o pronto de chaveamento
-scatter(v_1(1),y_1(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
-leg = [leg,'queda-livre -> 0°'];
+scatter(-v_1(1),y_1(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
+% leg = [leg,'queda-livre -> 0°'];
 
 %% condicao de chavemento 0° -> 35°
 % aceleracao antes do chaveamento
@@ -71,8 +71,8 @@ vals = [v_0, y_0, v_f, y_f, a1, a2];
 [y_2, v_2, ltx] = ptoChaveamento(vals);
 
 % plota ponto de chaveamento
-scatter(v_2(1),y_2(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
-leg = [leg,'0° -> 35°'];
+scatter(-v_2(1),y_2(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
+%leg = [leg,'0° -> 35°'];
 
 %% condicao de chavemento 35° -> 0°
 % aceleracao antes do chaveamento
@@ -85,25 +85,25 @@ vals = [v_0, y_0, v_f, y_f, a1, a2];
 
 % plota ponto de chaveamento
 [y_3, v_3, ltx] = ptoChaveamento(vals);
-scatter(v_3(1),y_3(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
-leg = [leg,'35° -> 0°'];
+scatter(-v_3(1),y_3(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
+%leg = [leg,'35° -> 0°'];
 
 %% area de pouso possível
-hf = fill_between(v0,y0(:,1),y0(:,2));
-hf.FaceColor = [203 255 164]/255;
+% hf = fill_between(v0,y0(:,1),y0(:,2));
+% hf.FaceColor = [203 255 164]/255;
 zero = zeros(length(y0(:,1)),1);
 
-%% area de colisao
-hf = fill_between(v0,zero,y0(:,2));
-hf.FaceColor = [255 164 164]/255;
+% %% area de colisao
+% hf = fill_between(v0,zero,y0(:,2));
+% hf.FaceColor = [255 164 164]/255;
 
 %% area de nao retorno porem pouco possível
 ums = ones(length(y0(:,1)),1);
-hf = fill_between(v0,y0(:,1),400*ums);
-hf.FaceColor = [194 200 255]/255;
+% hf = fill_between(v0,y0(:,1),400*ums);
+% hf.FaceColor = [194 200 255]/255;
 
-leg = ['pouso com queda livre inicial', 'colisão','pouso com acionamento inicial',leg];
-legend(leg);
+%leg = ['pouso com queda livre inicial', 'colisão','pouso com acionamento inicial',leg];
+%legend(leg);
 xlabel('v_0');
 ylabel('y_0');
 
@@ -122,9 +122,9 @@ disp(T);
 a1 =  E*cos(deg2rad(0))/M+g;
 a2 = E*cos(deg2rad(35))/M+g;
 
-t(1) = (v_1(1) -v_0)/g;
-t(2) = (v_2(1) -v_0)/a1;
-t(3) = (v_3(1) -v_0)/a2;
+t(1) = (-v_1(1) -v_0)/g;
+t(2) = (-v_2(1) -v_0)/a1;
+t(3) = (-v_3(1) -v_0)/a2;
 
 %% tabelo com tempos ate primeiro chaveamento
 T_t = table({'queda livre';'colisão';'colisão'}, ...
@@ -137,9 +137,9 @@ disp('Tempos até o primeiro chaveamento:');
 disp(T_t);
 
 %% calculo do tempo desde o chaveamento até o pouso
-t_2(1) = (0 - v_1(1))/a1;
-t_2(2) = (0 - v_2(1))/a2;
-t_2(3) = (0 - v_3(1))/a1;
+t_2(1) = (0 - -v_1(1))/a1;
+t_2(2) = (0 - -v_2(1))/a2;
+t_2(3) = (0 - -v_3(1))/a1;
 
 T_t_2 = table({'queda livre';'colisão';'colisão'}, ...
     { [num2str(t_2(1)),'s']; 'não pousa' ; [num2str(t_2(3)),'s'] },...
@@ -171,9 +171,9 @@ leg = {};
 
 %% pontos de chaveamento
 scatter(v_0,y_0,'filled','Linewidth', 2, 'MarkerEdgeColor','k');
-scatter(v_1(1),y_1(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
-scatter(v_2(1),y_2(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
-scatter(v_3(1),y_3(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
+scatter(-v_1(1),y_1(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
+scatter(-v_2(1),y_2(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
+scatter(-v_3(1),y_3(1),'filled','Linewidth', 2, 'MarkerEdgeColor','k');
 plot(v0,y0,'Linewidth', 0.1)
 
 %% trajetoria em queda livre a partir da posicao inicia
@@ -181,7 +181,7 @@ traj = trajetoria(g, v_0, y_0, t(1));
 plot(traj.v, traj.y, 'Linewidth', 2, 'LineStyle', '-.', 'Color','g');
 
 %% trajetoria com acionamento a 0 graus apos queda livre
-traj = trajetoria(a1, v_1(1), y_1(1), t_2(1));
+traj = trajetoria(a1, -v_1(1), y_1(1), t_2(1));
 ln1 = plot(traj.v, traj.y, 'Linewidth', 2, 'LineStyle', '-.', 'Color','g');
 
 %% trajetoria com acionamento a 0 graus a partir da posição inicial
@@ -189,7 +189,7 @@ traj = trajetoria(a1, v_0, y_0, t(2));
 plot(traj.v, traj.y, 'Linewidth', 2, 'LineStyle', '-.', 'Color','m');
 
 %% trajetoria com acionamento a 35 graus apos jato a 0 graus
-traj = trajetoria(a2, v_2(1), y_2(1), t_2(2));
+traj = trajetoria(a2, -v_2(1), y_2(1), t_2(2));
 ln2 = plot(traj.v, traj.y, 'Linewidth', 2, 'LineStyle', '-.', 'Color','m');
 
 %% trajetoria com acionamento a 35 graus a partir da posição inicial
@@ -197,7 +197,7 @@ traj = trajetoria(a2, v_0, y_0, t(3));
 plot(traj.v, traj.y, 'Linewidth', 2, 'LineStyle', '-.', 'Color','b');
 
 %% trajetoria com acionamento a 0 graus apos jato a 35 graus
-traj = trajetoria(a1, v_3(1), y_3(1), t_2(3));
+traj = trajetoria(a1, -v_3(1), y_3(1), t_2(3));
 ln3 = plot(traj.v, traj.y, 'Linewidth', 2, 'LineStyle', '-.', 'Color','b');
 
 
@@ -206,7 +206,7 @@ legds = {'1.3832s + 16.0748s = 17.458s',...
         '2.7738s + 20.4902s = 23.264s',...
         '10.2852s + 8.365s = 18.6501s'};
     
-legend(lines, legds);
+%legend(lines, legds);
 xlabel('v_0');
 ylabel('y_0');
 
